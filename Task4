@@ -1,0 +1,59 @@
+a. MySQL Backup
+# Full Backup of the database
+mysqldump -u root -p name_database > name_database_backup.sql
+b. PostgreSQL Backup
+
+# Full Backup of the database
+pg_dump -U postgres -d name_database -F c -b -v -f name_database_backup.dump
+
+Step 2: Restore the Database
+a. MySQL Restore
+
+# Restore the database
+mysql -u root -p name_database < name_database_backup.sql
+b. PostgreSQL Restore
+
+# Restore the database
+pg_restore -U postgres -d name_database -v name_database_backup.dump
+
+
+## Automating the Backup Process
+#!/bin/bash
+# MySQL Backup Script
+DB_NAME="name_database"
+BACKUP_DIR="/path/to/backup"
+DATE=$(date +%F)
+
+# Backup Command
+mysqldump -u root -p$MYSQL_ROOT_PASSWORD $DB_NAME > $BACKUP_DIR/${DB_NAME}_$DATE.sql
+
+# Output Message
+echo "Backup completed for $DB_NAME on $DATE."
+
+
+
+
+Testing Recovery
+a. Simulate a Failure
+Drop a table or delete some rows to simulate a failure.
+
+-- Example: Drop a table
+DROP TABLE attribute;
+b. Restore from Backup
+MySQL Recovery:
+
+
+mysql -u root -p name_database < name_database_backup.sql
+PostgreSQL Recovery:
+
+
+pg_restore -U postgres -d name_database -v name_database_backup.dump
+c. Verify Recovery
+Run queries to ensure the data is restored:
+
+
+-- Verify in MySQL/PostgreSQL
+SELECT COUNT(*) FROM attribute
+
+
+
